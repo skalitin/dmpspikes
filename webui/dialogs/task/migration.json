@@ -1,0 +1,205 @@
+{
+  "wizard": {
+    "steps": [
+      {
+        "title": "Target",
+        "form": {
+          "fields": [
+            {
+              "title": "Select Target connection",
+              "type": "combobox",
+              "field": "targetConnectionId",
+              "dataName": "targetConnection",
+
+              "options": {
+                "placeholder": "Select Target connection",
+                "dataTextField": "name",
+                "dataValueField": "_id",
+                "dataSource": {
+                  "type": "dmp",
+                  "transport": {
+                    "read": "/api/connections"
+                  },
+                  "filter": {
+                    "field": "isTarget",
+                    "value": true
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "title": "Mail",
+        "form": {
+          "fields": [
+            {
+              "text": "<p>Select what kind of target users you want to be created.<br>This affects Exchange migration, see documentation for details.</p>",
+              "type": "dynamictext"
+            },
+            {
+              "title": "",
+              "type": "buttonset",
+              "field": "mailType",
+              "options":{
+              },
+              "items":[
+                {
+                  "label":"Users without mail options",
+                  "value":"without mail options"
+                },
+                {
+                  "label":"Mail-enabled users",
+                  "value":"mail enabled"
+                },
+                {
+                  "label":"Mailbox-enabled users",
+                  "value":"mailbox enabled"
+                }
+              ]
+            },
+            {
+              "type": "dynamictext",
+              "text": "<P style = 'font-weight:bold'>Mailbox redirection settings</P>"
+            },
+            {
+              "title": "Target SMTP address template",
+              "type": "text",
+              "field": "targetTemplate"
+            },
+            {
+              "title": "Source SMTP address template",
+              "type": "text",
+              "field": "sourceTemplate"
+            },
+            {
+              "title": "Merge objects with corresponding contacts",
+              "type": "checkbox",
+              "field": "mergeObjects"
+            },
+            {
+              "type": "dynamictext",
+              "text": "<P><STRONG>Default mailbox database</STRONG></P>"
+            },
+            {
+              "title": "Target mailbox database",
+              "type": "text",
+              "field": "targetMbDb"
+            },
+            {
+              "title": "Source mailbox database",
+              "type": "text",
+              "field": "sourceMbDb"
+            }
+          ]
+        }
+      },
+      {
+        "title": "Mapping",
+        "form": {
+          "fields": [
+            {
+              "text": "<p>Select objects mapping file.</p>",
+              "type": "dynamictext"
+            },
+            {
+              "field": "mappingFileId",
+              "type": "fileupload",
+              "fileUploaderOptions" : {
+                "url": "/api/files"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "title": "Schedule",
+        "form": {
+          "fields": [
+            {
+              "type": "buttonset",
+              "field": "runTask",
+              "items":[
+                {
+                  "label":"Do not schedule",
+                  "value":"later"
+                },
+                {
+                  "label":"Run now",
+                  "value":"now"
+                },
+                {
+                  "label":"On Schedule",
+                  "value":"schedule"
+                }
+              ]
+            },
+            {
+              "type": "schedule",
+              "field": "schedule",
+              "hidden": "runTask !== 'schedule'"
+            }
+          ]
+        }
+      },
+      {
+        "title": "Summary",
+        "form": {
+          "fields": [
+            {
+              "type": "dynamictext",
+              "text": "<P>You are about to create the following task:</P>"
+            },
+            {
+              "title": "Name",
+              "type": "text",
+              "field": "name",
+              "validation": {
+                "required": true,
+                "prevent-duplicates": {
+                  "url": "/api/tasks",
+                  "field": "name",
+                  "message": "Task name should be unique"
+                }
+              }
+            },
+            {
+              "type": "dynamictable",
+              "fields": [
+                {"Objects selected for migration:":"selectedObjects.selectedCount"},
+                {"Target Connection:":"targetConnection.name"},
+                {"Users type:":"mailType"},
+                {"Merge objects:":"mergeObjects"},
+                {"Target SMTP address template:":"targetTemplate"},
+                {"Source SMTP address template:":"sourceTemplate"},
+                {"Target mailbox database:":"targetMbDb"},
+                {"Source mailbox database:":"sourceMbDb"},
+                {"Mapping:": "mappingFileId.filename"}
+              ]
+            },
+            {
+              "type":"dynamictext",
+              "style":"margin-top:28px;",
+              "text":""
+            }
+          ]
+        }
+      }
+    ]
+  },
+
+  "title": "New Migration Task",
+
+  "defaults":{
+
+    "name": "New Migration Task",
+    "mailType":"without mail options",
+    "mergeObjects":"false",
+    "type":"Migration",
+    "status":"New",
+    "runTask": "later"
+  },
+
+  "width": "800px"
+}

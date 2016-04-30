@@ -1,0 +1,11 @@
+{
+  "name": "migrated",
+
+  "type": "count",
+  "entity": "objects",
+
+  "query": {
+
+    "query": { "terms": { "status": [ "completed" ] } }
+  }
+}

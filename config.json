@@ -1,0 +1,76 @@
+{
+  "webui_service": {
+    "port": 80,
+    "webui_extensions": [
+      "..",
+      "DMP-config",
+      "webui"
+    ],
+    "send_analytics": true
+  },
+  "shared_components_service": {
+    "port": 81
+  },
+  "guard_service": {
+    "port": 85,
+    "log_size": "1m",
+    "log_files": 5
+  },
+  "rest_service": {
+    "port": 8080,
+    "elasticsearch_port": 8090,
+    "elasticsearch_db": [
+      "..",
+      "DMP-config",
+      "elasticsearch",
+      "data"
+    ],
+    "coverage": "false",
+    "log_level": "info",
+    "models_extensions": [
+      "..",
+      "DMP-config",
+      "models.js"
+    ],
+    "retries": {
+      "count": 5,
+      "interval": 5000
+    }
+  },
+  "scheduler_service": {
+    "port": 8085,
+    "coverage": "false",
+    "log_level": "info"
+  },
+  "watcher_service": {
+    "enabled": false,
+    "port": 8084,
+    "attempts": 20,
+    "delay": 3000,
+    "coverage": "false",
+    "log_level": "info",
+    "watchers": {
+      "tasks": {
+        "enabled": false,
+        "interval": 5000,
+        "page_size": 100
+      },
+      "restarttask": {
+        "interval": 2000,
+        "page_size": 5000
+      },
+      "stat": {
+        "enabled": false,
+        "interval": 5000,
+        "queries_path": [
+          "..",
+          "DMP-config",
+          "stat"
+        ]
+      }
+    }
+  },
+  "log_path": [
+    "logs"
+  ]
+}

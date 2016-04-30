@@ -1,0 +1,134 @@
+{
+  "source": {
+    "name": "Source",
+    "actions": [
+      {
+        "label": "New",
+        "icon_class": "new",
+        "type": "dropdown",
+        "controller": "CreateEditConnectionActionController",
+        "anchor": "left",
+        "items": [
+          {
+            "label": "Active Directory Connection",
+            "options": { "type": "ActiveDirectory", "isSource": true }
+          },
+          {
+            "label": "LDAP Connection",
+            "options": { "type": "LDAP", "isSource": true }
+          }
+        ]
+      },
+      {
+        "label": "Edit",
+        "icon_class": "edit",
+        "controller": "EditConnectionActionController",
+        "extraOptions": {
+          "selectedRow": "tabs['source'].gridSelectedRows"
+        }
+      }
+    ],
+    "gridOptions": {
+      "columns": [
+        {
+          "field": "name",
+          "title": "Name"
+        },
+        {
+          "field": "type",
+          "title": "Type"
+        },
+        {
+          "field": "created",
+          "title": "Created",
+          "width": "190px",
+          "template": "<nobr>#: Sprint.humanize(created, 'CalendarDate') #</nobr>"
+        }
+      ],
+      "dataSource": {
+        "transport": {
+          "read": {
+            "url": "/api/connections"
+          }
+        },
+        "filter": {
+          "field": "isSource",
+          "value": true,
+          "operator": "eq"
+        },
+        "sort": [
+          {
+            "field": "created",
+            "dir": "desc"
+          }
+        ]
+      }
+    }
+  },
+  "target": {
+    "name": "Target",
+    "actions": [
+      {
+        "label": "New",
+        "icon_class": "new",
+        "type": "dropdown",
+        "controller": "CreateEditConnectionActionController",
+        "anchor": "left",
+        "items": [
+          {
+            "label": "Active Directory Connection",
+            "options": { "type": "ActiveDirectory", "isTarget": true }
+          },
+          {
+            "label": "LDAP Connection",
+            "options": { "type": "LDAP", "isTarget": true }
+          }
+        ]
+      },
+      {
+        "label": "Edit",
+        "icon_class": "edit",
+        "controller": "EditConnectionActionController",
+        "extraOptions": {
+          "selectedRow": "tabs['target'].gridSelectedRows"
+        }
+      }
+    ],
+    "gridOptions": {
+      "columns": [
+        {
+          "field": "name",
+          "title": "Name"
+        },
+        {
+          "field": "type",
+          "title": "Type"
+        },
+        {
+          "field": "created",
+          "title": "Created",
+          "width": "190px",
+          "template": "<nobr>#: Sprint.humanize(created, 'CalendarDate') #</nobr>"
+        }
+      ],
+      "dataSource": {
+        "transport": {
+          "read": {
+            "url": "/api/connections"
+          }
+        },
+        "filter": {
+          "field": "isTarget",
+          "value": true,
+          "operator": "eq"
+        },
+        "sort": [
+          {
+            "field": "created",
+            "dir": "desc"
+          }
+        ]
+      }
+    }
+  }
+}

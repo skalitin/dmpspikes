@@ -1,0 +1,32 @@
+{
+  "fields": [
+    {
+      "name": "ProductName",
+      "title": "License"
+    },
+    {
+      "name": "Type",
+      "title": "Type"
+    },
+    {
+      "name": "ExpiryDate",
+      "title": "Expires",
+      "type": "date",
+      "validate": "value > today || license.Type == 'Perpetual'"
+    },
+    {
+      "name": "ProductVersion",
+      "title": "Product Version"
+    },
+    {
+      "name": "LicensedObjects",
+      "title": "Licensed Objects"
+    },
+    {
+      "name": "stat.migrated.count",
+      "title": "Migrated Objects",
+      "type": "integer",
+      "validate": "value <= toInt( license.LicensedObjects )"
+    }
+  ]
+}

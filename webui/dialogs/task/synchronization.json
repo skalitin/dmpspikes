@@ -1,0 +1,505 @@
+{
+    "wizard": {
+        "steps": [
+          {
+              "title": "Source",
+              "active": true,
+              "form": {
+                  "name": "Specify Source Scope",
+                  "fields": [
+                    {
+                      "type":"group",
+                      "fields":[
+                        {
+                          "title": "Select Source connection",
+                          "type": "combobox",
+                          "field": "sourceConnectionId",
+                          "dataName": "sourceConnection",
+
+                          "options": {
+                            "placeholder": "Select Source connection",
+                            "dataTextField": "name",
+                            "dataValueField": "_id",
+                            "dataSource": {
+                              "type": "dmp",
+                              "transport": {
+                                "read": "/api/connections"
+                              },
+                              "filter": {
+                                "field": "isSource",
+                                "value": true
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "type":"delimiter"
+                        },
+                        {
+                          "type":"buttonset",
+                          "field":"syncSourceToTarget",
+                          "items":[
+                            {
+                              "label":"Do not sync Source to Tanget",
+                              "value": false
+                            },
+                            {
+                              "label":"Sync Source to Target:",
+                              "value": true
+                            }
+                          ]
+                        },
+                        {
+                          "title": "Source Container(DN) to Sync",
+                          "type": "selectedobjects",
+                          "field": "sourceDN",
+                          "disabled":"syncSourceToTarget !== 'true'",
+                          "options": {
+                            "buttonLabel": "Browse",
+                            "dataTextField": "name",
+                            "dataValueField": "_id",
+                            "url": "/api/organizationunits",
+                            "columns": [
+                              {
+                                "field": "name",
+                                "title": "Name"
+                              },
+                              {
+                                "field": "dn",
+                                "title": "Distinguished Name"
+                              }
+                            ]
+                          }
+                        }
+                      ],
+                      "title":"Select source containers"
+                    },
+                    {
+                      "type":"delimiter"
+                    },
+                    {
+                      "type":"group",
+                      "title":"Target objects handling",
+                      "fields":[
+                        {
+                          "type":"buttonset",
+                          "field":"targetObjects",
+                          "items":[
+                            {
+                              "label":"Do not create objects on target (only merge them)",
+                              "value":"notCreate"
+                            },
+                            {
+                              "label":"Create objects in:",
+                              "value":"createIn"
+                            }
+                          ]
+                        },
+                        {
+                          "title": "Create objects in Target Container(DN)",
+                          "type": "selectedobjects",
+                          "field": "sourceTargetDN",
+                          "disabled":"targetObjects !== 'createIn'",
+                          "options": {
+                            "select": "single",
+                            "buttonLabel": "Browse",
+                            "dataTextField": "name",
+                            "dataValueField": "_id",
+                            "url": "/api/organizationunits",
+                            "columns": [
+                              {
+                                "field": "name",
+                                "title": "Name"
+                              },
+                              {
+                                "field": "dn",
+                                "title": "Distinguished Name"
+                              }
+                            ]
+                          }
+                        },
+                        {
+                          "type":"checkbox",
+                          "title": "Disable target account",
+                          "field": "disableTarget",
+                          "disabled":"targetObjects !== 'createIn'"
+                        }
+                      ]
+                    }
+                  ]
+              }
+          },
+          {
+            "title":"Security",
+            "active":false,
+            "form":{
+              "name":"Set Security Settings",
+              "fields":[
+                {
+                  "type":"group",
+                  "title":"Security options",
+                  "fields":[
+                    {
+                      "type":"combobox",
+                      "title":"Security Descriptor migration rule",
+                      "field":"sdRule",
+                      "options": {
+                        "dataTextField": "name",
+                        "dataValueField": "_id",
+                        "dataSource": {
+                          "data": [
+                            { "_id": "merge", "name": "Merge" },
+                            { "_id": "replace", "name": "Replace" },
+                            { "_id": "skip", "name": "Skip" }
+                          ]
+                        }
+                      }
+                    },
+                    {
+                      "type":"checkbox",
+                      "title": "Preserve access to resources for the target accounts during the transition period",
+                      "field": "addSidHistory"
+                    }
+                  ]
+                },
+                {
+                  "type":"delimiter"
+                },
+                {
+                  "type":"group",
+                  "title":"User Principal Name handling",
+                  "fields":[
+                    {
+                      "type":"buttonset",
+                      "field":"upn",
+                      "items":[
+                        {
+                          "label":"Synchronize",
+                          "value":"sync"
+                        },
+                        {
+                          "label":"Skip",
+                          "value":"skip"
+                        },
+                        {
+                          "label":"Set the domain suffix of the UPNs to:",
+                          "value":"manual"
+                        }
+                      ]
+                    },
+                    {
+                      "type":"combobox",
+                      "field":"upnDomainSuffix",
+                      "disabled":"upn !== 'manual'",
+                      "options": {
+                        "dataTextField": "name",
+                        "dataValueField": "_id",
+                        "dataSource": {
+                          "data": [
+                            { "_id": "url1", "name": "albus.amazon.dmm" }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type":"delimiter"
+                },
+                {
+                  "type":"group",
+                  "title":"Password options",
+                  "fields":[
+                    {
+                      "type":"checkbox",
+                      "title": "Synchronize passwords",
+                      "field": "syncPass"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "title": "Target",
+            "active": false,
+            "form": {
+              "name": "Specify Target Scope",
+              "fields": [
+                {
+                  "title":"Select target containers",
+                  "type":"group",
+                  "fields":[
+                    {
+                      "type":"delimiter"
+                    },
+                    {
+                      "title": "Target Container(DN) to Sync",
+                      "type": "text",
+                      "field": "targetDN",
+                      "placeholder": "Leave blank to skip Target to Source Sync"
+                    },
+                    {
+                          "type":"buttonset",
+                          "field":"syncTargetToSource",
+                          "items":[
+                            {
+                              "label":"Do not sync Tanget to Source",
+                              "value": false
+                            },
+                            {
+                              "label":"Sync Target to Source:",
+                              "value": true
+                            }
+                          ]
+                        },
+                        {
+                          "title": "Target Container(DN) to Sync",
+                          "type": "selectedobjects",
+                          "field": "targetDN",
+                          "disabled":"syncTargetToSource !== 'true'",
+                          "options": {
+                            "buttonLabel": "Browse",
+                            "dataTextField": "name",
+                            "dataValueField": "_id",
+                            "url": "/api/organizationunits",
+                            "columns": [
+                              {
+                                "field": "name",
+                                "title": "Name"
+                              },
+                              {
+                                "field": "dn",
+                                "title": "Distinguished Name"
+                              }
+                            ]
+                          }
+                        }
+                  ]
+                },
+                {
+                  "type":"delimiter"
+                },
+                {
+                  "type":"group",
+                  "title":"Source object handling",
+                  "fields":[
+                    {
+                      "type":"buttonset",
+                      "field":"sourceObjects",
+                      "items":[
+                        {
+                          "label":"Do not create objects on source (only merge them)",
+                          "value":"notCreate"
+                        },
+                        {
+                          "label":"Create objects in:",
+                          "value":"createIn"
+                        }
+                      ]
+                    },
+                    {
+                      "title": "Create objects in Source Container(DN)",
+                      "type": "selectedobjects",
+                      "field": "targetSourceDN",
+                      "disabled":"sourceObjects !== 'createIn'",
+                      "options": {
+                        "select": "single",
+                        "buttonLabel": "Browse",
+                        "dataTextField": "name",
+                        "dataValueField": "_id",
+                        "url": "/api/organizationunits",
+                        "columns": [
+                          {
+                            "field": "name",
+                            "title": "Name"
+                          },
+                          {
+                            "field": "dn",
+                            "title": "Distinguished Name"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "title":"Options",
+            "form":{
+              "name":"Advanced options",
+              "fields":[
+                {
+                  "type":"group",
+                  "title":"Custom add-in",
+                  "fields":[
+                    {
+                      "type":"checkbox",
+                      "title": "Use custom add-in",
+                      "field": "useCustomAddin"
+                    },
+                    {
+                      "field": "cusomAddingFileName",
+                      "type": "fileupload",
+                      "disabled":"useCustomAddin !== true",
+                      "fileUploaderOptions" : {
+                        "url": "/api/files"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "title": "Synchronize object deletions",
+                  "type": "checkbox"
+                },
+                {
+                  "type":"delimiter"
+                },
+                {
+                  "type":"group",
+                  "title":"Attributes to skip:",
+                  "fields":[
+                    {
+                      "title": "Specify the attributes to skip:",
+                      "type": "text",
+                      "field":"skipAttributes"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "title":"Exchange",
+            "form":{
+              "name":"Specify Exchange Options",
+              "fields":[
+                {
+                  "type": "group",
+                  "title": "Select what kind of users you want to get. This affects Exchange migration' see documentation for details",
+                  "fields": [
+                    {
+                      "type": "buttonset",
+                      "field": "exchangeUsers",
+                      "items": [
+                        {
+                          "label": "Users without mail options",
+                          "value": "withoutMail"
+                        },
+                        {
+                          "label": "Mail-enabled users",
+                          "value": "mailEnabled"
+                        },
+                        {
+                          "label": "Mail-enabled users for Native Move",
+                          "value": "mailEnabledNative"
+                        },
+                        {
+                          "label":"Mailbox-enabled users",
+                          "value":"mailboxEnabled"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type":"delimiter"
+                },
+                {
+                  "type":"group",
+                  "title":"Mailbox redirection settings",
+                  "fields":[
+                    {
+                      "title": "Target SMTP address template:",
+                      "type": "text",
+                      "field": "targetSMTPtemplate"
+                    },
+                    {
+                      "type":"delimiter"
+                    },
+                    {
+                      "title": "Source SMTP address template:",
+                      "type": "text",
+                      "field": "sourceSMTPtemplate"
+                    },
+                    {
+                      "type":"delimiter"
+                    },
+                    {
+                      "type":"checkbox",
+                      "title": "Merge objects with corresponding contacts",
+                      "field": "mergeObjectsWithContacts"
+                    },
+                    {
+                      "type":"delimiter"
+                    },
+                    {
+                      "title": "Specify default target mailbox DB:",
+                      "type": "text",
+                      "field":"defTargetMailDB"
+                    },
+                    {
+                      "title": "Specify default source mailbox DB:",
+                      "type": "text",
+                      "field":"defSourceMailDB"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+              "title": "Summary",
+              "form": {
+                  "name": "Summary",
+                  "fields": [
+                      {
+                          "type": "dynamictext",
+                          "text": "<P>You are about to create the following task:</P>"
+                      },
+                      {
+                          "title": "Name",
+                          "type": "text",
+                          "field": "name"
+                      },
+                      {
+                          "title": "Source Connection",
+                          "type": "text",
+                          "field": "sourceConnection.name"
+                      },
+                      {
+                          "type": "dynamictext",
+                          "text": "<P>Click <STRONG>Save and Close</STRONG> to create the task</P>"
+                      }
+        ]
+              }
+          }
+        ]
+    },
+    
+    "title": "New Synchronization Task",
+
+    "defaults":{
+      "name": "New Synchronization Task",
+      "type":"Synchronization",
+      "status":"New",
+      "targetObjects":"notCreate",
+      "sourceObjects":"notCreate",
+      "sdRule":"skip",
+      "upn":"sync",
+      "upnDomainSuffix":"url1",
+      "syncPass":true,
+      "exchangeUsers":"mailEnabledNative",
+      "targetSMTPtemplate":"@domain.com",
+      "sourceSMTPtemplate":"@domain.com",
+      "mergeObjectsWithContacts":true,
+      "syncSourceToTarget": "false",
+      "syncTargetToSource": "false",
+      "targetSourceDN": [],
+      "sourceDN": [],
+      "targetDN": [],
+      "sourceTargetDN": []
+    }
+}

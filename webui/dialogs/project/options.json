@@ -1,0 +1,30 @@
+{
+  "form": {
+    "fields": [
+      {
+        "title": "Project name",
+        "type": "text",
+        "field": "name",
+        "validation": {
+            "required": true,
+            "prevent-duplicates": {
+              "url": "/api/projects",
+              "field": "name",
+              "message": "Project name should be unique"
+            }
+        }
+      },
+      {
+        "title": "Description",
+        "type": "text",
+        "field": "description"
+      }
+    ]  
+  },
+
+  "defaults": {
+    "type": "activedirectory"
+  },
+
+  "width": "700px"
+}

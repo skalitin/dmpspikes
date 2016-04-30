@@ -1,0 +1,106 @@
+{
+  "title": "Logon Time & Org Structure",
+  "rows": [
+    {
+      "height": "250px",
+      "panels": [
+
+        {
+          "span": 2,
+          "field": "_id",
+          "type": "hits",
+          "chart": "value",
+          "title": "Total"
+        },
+
+        {
+          "span": 4,
+          "chart": "pie",
+          "field": "used",
+          "title": "Last Logon Time",
+          "type": "filters",
+          "filters": {
+            "Last 30 days" : {
+              "range" : {
+                "used" : { "lte" : "now", "gte": "now-30d" }
+              }
+            },
+            "30-60 days" : {
+              "range" : {
+                "used" : { "lte" : "now-30d", "gte": "now-60d" }
+              }
+            },
+            "60-120 days" : {
+              "range" : {
+                "used" : { "lte" : "now-60d", "gte": "now-120d" }
+              }
+            },
+            "120 days - 1 year" : {
+              "range" : {
+                "used" : { "lte" : "now-120d", "gte": "now-1y" }
+              }
+            }
+          }
+        },
+
+        {
+        "span": 2,
+          "chart": "bar",
+          "field": "status._raw",
+          "title": "Migration Statuses",
+          "type": "terms",
+          "colors": {
+            "New": "#1f9dfa",
+            "In Progress": "#f2af00",
+            "Failed": "#ce1126",
+            "Completed": "#79b800"
+          }
+        }
+
+      ]
+    },
+    {
+      "height": "150px",
+      "panels": [
+
+        {
+        "span": 2,
+          "chart": "table",
+          "field": "company._raw",
+          "title": "Companies",
+          "type": "terms"
+        },
+
+        {
+        "span":4,
+          "chart": "bar",
+          "field": "company._raw",
+          "title": "Companies",
+          "type": "terms"
+        }
+    ] },
+        
+    {
+      "height": "150px",
+      "panels": [
+      
+        {
+        "span": 2,
+          "chart": "table",
+          "field": "title._raw",
+          "title": "Titles",
+          "type": "terms"
+        },
+
+        {
+           "span": 4,
+          "chart": "bar",
+          "field": "title._raw",
+          "title": "Titles",
+          "type": "terms"
+        }
+
+      ]
+    }
+  ]
+}

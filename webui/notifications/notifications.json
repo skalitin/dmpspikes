@@ -1,0 +1,40 @@
+{
+  "states": [
+    {
+      "text": "First of all <action>Add a Source Connection</action> to get started.",
+      "type": "note",
+      "state": "BeforeConnectionCreated",
+
+      "action": {
+
+        "type": "dropdown",
+        "controller": "CreateEditConnectionActionController",
+        "items": [
+          {
+            "label": "Active Directory Connection",
+            "options": { "type": "ActiveDirectory", "isSource": true }
+          },
+          {
+            "label": "LDAP Connection",
+            "options": { "type": "LDAP", "isSource": true }
+          }
+        ]
+      }
+    },
+    {
+      "text": "<action>Create a Discovery task</action> to enumerate available objects.",
+      "type": "note",
+      "controller": "TaskActionController",
+      "options": {
+        "type": "discover"
+      },
+      "state": "BeforeDiscovery"
+    },
+    {
+      "text": "<action>Select the objects</action> you want to migrate and create a Migration task.",
+      "type": "note",
+      "controller": "MigrateActionController",
+      "state": "BeforeMigration"
+    }
+  ]
+}

@@ -1,0 +1,99 @@
+{
+  "checkboxes": true,
+  "gridOptions": {
+    "columns": [
+    {
+        "title": "Name",
+        "field": "name",
+        "width": 150
+    },
+    {
+        "title": "Role",
+        "field": "role",
+        "width": 150
+    },
+    {
+        "title": "Department",
+        "field": "department",
+        "width": 150
+    },
+    {
+        "title": "Location",
+        "field": "location",
+        "width": 150
+    },
+    {
+        "title": "Email",
+        "field": "email",
+        "width": 150
+    },
+    {
+        "title": "Domain",
+        "field": "domain",
+        "width": 150
+    },
+    {
+        "title": "Domain Controller",
+        "field": "domainController",
+        "width": 150
+    },
+    {
+        "title": "State",
+        "template": "<dmp-progress-bar data='#: JSON.stringify(data) #' controller-name='EntityProgressBarController' />",
+        "width": "200px"
+    },
+    {
+        "title": "Details",
+        "field": "lastResultDescription"
+    }
+],
+    
+    "dataSource": {
+      "sort": {
+        "field": "name",
+        "dir": "asc"
+      }
+    }
+  },
+  
+  "gridSearchOptions": {
+    "totalForms":"objectsCount"
+  },
+  
+  "detailsPanel": {
+      "template": "/pmui/src/pages/detailPanels/objectsDetailsPanel.html",
+      "height": "250px",
+      "title": {
+          "field": "name",
+          "classField": "icon",
+          "class": "object-type-icon"
+      },
+      "fields": [
+          {
+              "Connection": {
+                  "api": "'/api/connections/'+connectionId",
+                  "valueField": "name"
+                  }
+          },
+          {
+              "Created": {
+                  "field": "created",
+                  "format": "LocalDate"
+              }
+          },
+          {
+              "Modified": {
+                  "field": "modified",
+                  "format": "LocalDate"
+              }
+          },
+          {
+              "Status": "status"
+          },
+          {
+              "Last Operation": "lastResultDescription"
+          }
+      ],
+      "actions": []
+  }
+}

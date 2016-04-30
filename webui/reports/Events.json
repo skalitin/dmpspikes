@@ -1,0 +1,37 @@
+{
+  "title": "Events",
+  "type": "events",
+
+  "rows": [
+    {
+      "title": "",
+      "height": "200px",
+      "collapse": false,
+      "collapsable": false,
+      "panels": [
+
+        {
+          "span": 2,
+          "field": "_id",
+          "type": "hits",
+          "chart": "value",
+          "title": "Total count of events"
+        },
+
+        {
+          "span": 4,
+          "chart": "bar",
+          "field": "severity._raw",
+          "title": "Types",
+          "type": "terms",
+          "colors": {
+            "Info": "#007db8",
+            "Warning": "#f2af00",
+            "Error": "#c20000"
+          }
+        }
+
+      ]
+    }
+  ]
+}
