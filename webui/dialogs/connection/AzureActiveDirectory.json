@@ -1,0 +1,62 @@
+{
+  "title": "New Connection",
+  "form": {
+    "fields":[
+      {
+        "title": "Connection name",
+        "placeholder": "Specify connection name",
+        "type": "text",
+        "field": "name",
+        "validation": {
+          "required": true,
+          "message": "Field should not be empty",
+          "prevent-duplicates": {
+            "url": "/api/connections",
+            "field": "name",
+            "message": "Connection name should be unique"
+          }
+        }
+      },
+      {
+        "title": "Tenant Id",
+        "type": "text",
+        "field": "tenantId",
+        "validation": {
+          "required": true,
+          "message": "Field should not be empty",
+          "prevent-duplicates": {
+            "url": "/api/connections",
+            "field": "tenantId",
+            "message": "Tenant Id should be unique"
+          }
+        }
+      },
+      {
+        "title": "Client Id",
+        "type": "text",
+        "field": "clientId",
+        "validation": {
+          "required": true,
+          "message": "Field should not be empty"
+        },
+        "tooltip": {
+          "content": "Client app should be registered for the tenant in Azure AD portal"
+        }
+      },
+      {
+        "title": "Client Secret",
+        "type": "text",
+        "field": "clientSecret",
+        "validation": {
+          "required": true,
+          "message": "Field should not be empty"
+        }
+      }
+   ]
+   },
+  "defaults": {
+    "type" : "ActiveDirectory"
+  },
+  "footer": "/pmui/src/dialogs/connection/test-connection.html",
+  "width": "700px"
+}

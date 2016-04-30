@@ -1,28 +1,87 @@
 var models = {
-    "object": {
+
+    "ad_field": {
+        "type": "ad_fields",
         "fields": {
-            "name": {
+            "projectId": {
+                "type": "string",
+                "index": false
+            },
+            "title": {
                 "type": "string"
             },
-            "role": {
+        }
+    },
+
+    "backup": {
+        "type": "backups",
+        "fields": {
+            "tenantId": {
                 "type": "string"
             },
-            "department": {
+            "projectId": {
+                "type": "string",
+                "index": false
+            },
+            "title": {
                 "type": "string"
             },
-            "location": {
-                "type": "string"
+            "when": {
+                "type": "date"
             },
-            "email": {
-                "type": "string"
-            },
-            "domain": {
-                "type": "string"
-            },
-            "domainController": {
+            "users": {
+                "type": "long"
+            }
+        }
+    },
+
+    "task": {
+        "fields": {
+            "backup": {
                 "type": "string"
             }
         }
+    },
+
+    "object": {
+        "fields": {
+            "displayName": {
+                "type": "string"
+            },
+            "givenName": {
+                "type": "string"
+            },
+            "surname": {
+                "type": "string"
+            },
+            "mail": {
+                "type": "string"
+            },
+            "mailNickname": {
+                "type": "string"
+            },
+            "backupDate": {
+                "type": "date"
+            },
+            "tenantId": {
+                "type": "string"
+            },
+        }
+    },
+
+    "connection": {
+       "fields": {
+            "tenantId": {
+                "type": "string"
+            },	
+            "clientId": {
+                "type": "string"
+            },	
+            "clientSecret": {
+                "type": "string"
+            },	
+	    }
     }
 }
+
 module.exports = models;

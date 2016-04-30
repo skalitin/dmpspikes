@@ -1,28 +1,17 @@
 {
   "states": [
     {
-      "text": "First of all <action>Add a Source Connection</action> to get started.",
+      "text": "First of all <action>Add an Azure AD tenant</action> to get started.",
       "type": "note",
       "state": "BeforeConnectionCreated",
 
       "action": {
-
-        "type": "dropdown",
         "controller": "CreateEditConnectionActionController",
-        "items": [
-          {
-            "label": "Active Directory Connection",
-            "options": { "type": "ActiveDirectory", "isSource": true }
-          },
-          {
-            "label": "LDAP Connection",
-            "options": { "type": "LDAP", "isSource": true }
-          }
-        ]
+        "options": { "type": "AzureActiveDirectory", "isSource": true }
       }
     },
     {
-      "text": "<action>Create a Discovery task</action> to enumerate available objects.",
+      "text": "<action>Create a Backup Unpacking task</action> to enumerate backed up objects.",
       "type": "note",
       "controller": "TaskActionController",
       "options": {
@@ -31,7 +20,7 @@
       "state": "BeforeDiscovery"
     },
     {
-      "text": "<action>Select the objects</action> you want to migrate and create a Migration task.",
+      "text": "<action>Select the objects</action> you want to restore and create a Restore task.",
       "type": "note",
       "controller": "MigrateActionController",
       "state": "BeforeMigration"

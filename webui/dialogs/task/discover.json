@@ -1,72 +1,49 @@
 {
-
     "form": {
         "fields": [
             {
-                "title": "Task name",
-                "type": "text",
-                "field": "name",
-                "validation": {
-                    "required": true,
-                    "prevent-duplicates": {
-                      "url": "/api/tasks",
-                      "field": "name",
-                      "message": "Task name should be unique"
-                    }
-                }
-            },
-            {
-                "title": "Select connection",
-                "type": "combobox",
-                "field": "sourceConnectionId",
-                "options": {
-                    "placeholder": "Select connection",
-                    "dataTextField": "name",
-                    "dataValueField": "_id",
+
+		"title": "Select backups to unpack",
+		"type": "selectedobjects",
+		"field": "backup",
+		
+		"options": {
+
+		    "buttonLabel": "Browse",
+		    "dataTextField": "when",
+		    "dataValueField": "_id",
+
                     "dataSource": {
-                      "type": "dmp",
-                      "transport": {
-                        "read": "/api/connections"
-                      },
-                      "filter": {
-                        "field": "isSource",
-                        "value": true
-                      }
+                        "serverSorting": true,
+                        "sort": {
+                            "field": "title",
+                            "dir": "desc"
+                        }
                     },
-                    "width": 200
-                }
-            },
-            {
-                "title": "Run task",
-                "type": "combobox",
-                "field": "runTask",
-                "options": {
-                  "dataTextField": "name",
-                  "dataValueField": "_id",
-                  "dataSource": {
-                    "type": "dmp",
-                    "data": [
-                      {"_id": "later", "name": "Manually"},
-                      {"_id": "now", "name": "Now"}, 
-                      {"_id": "schedule", "name": "On Schedule"}
-                    ]
-                  }
-                }
-            },
-            {
-              "type": "schedule",
-              "field": "schedule",
-              "title": "Schedule",
-              "hidden": "runTask !== 'schedule'"
+
+                    "url": "/api/backups",
+
+		    "columns": [
+			{
+			    "title": "Created",
+			    "field": "when",
+                            "template": "<nobr>#: Sprint.humanize(when + 'Z', 'CalendarDate') #</nobr>",
+                            "sortable": true
+			},
+			{
+			    "title": "Users",
+			    "field": "users"
+			}
+		    ]
+		}
             }
         ]
     },
 
-    "title": "New Discovery Task",
+    "title": "Backup Unpacking",
 
     "defaults": {
-
-      "name": "Discovery Task",
+      "name": "Backup Unpacking",
       "status": "New",
       "type": "Discover",
       "runTask": "now"

@@ -1,24 +1,19 @@
 [
   {
-    "label": "Discover",
+    "label": "Manage tenants",
+    "icon_class": "manage-connections",
+    "controller": "ManageConnectionsActionController"
+  },
+  {
+    "label": "Unpack backup",
     "icon_class": "discover",
     "type": "discover",
     "enabled_state": "ConnectionsExist"
   },
   {
-    "label": "Browse objects to migrate",
+    "label": "Browse objects to restore",
     "icon_class": "check-action-icon",
     "controller": "MigrateActionController",
     "enabled_state": "ObjectsExist"
-  },
-  {
-    "label": "Sync",
-    "icon_class": "sync",
-    "type": "synchronization"
-  },
-  {
-    "label": "Manage connections",
-    "icon_class": "manage-connections",
-    "controller": "ManageConnectionsActionController"
   }
 ]
