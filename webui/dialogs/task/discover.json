@@ -2,7 +2,6 @@
     "form": {
         "fields": [
             {
-
 		"title": "Select backups to unpack",
 		"type": "selectedobjects",
 		"field": "backup",
@@ -52,7 +51,7 @@
     "title": "Backup Unpacking",
 
     "defaults": {
-      "name": "Backup Unpacking",
+      "name": "Backup unpacking",
       "status": "New",
       "type": "Discover",
       "runTask": "now"

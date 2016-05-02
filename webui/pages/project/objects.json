@@ -3,48 +3,40 @@
   "gridOptions": {
     "columns": [
     {
-        "title": "Name",
-        "field": "name",
+        "title": "Display Name",
+        "field": "displayName",
         "width": 150
     },
     {
-        "title": "Role",
-        "field": "role",
+        "title": "Principal Name",
+        "field": "userPrincipalName",
         "width": 150
+    },
+    {
+        "title": "Mail",
+        "field": "mail",
+        "width": 150
+    },
+    {
+        "title": "Backup Date",
+        "field": "backupDate",
+        "template": "<nobr>#: Sprint.humanize(backupDate + 'Z', 'CalendarDate') #</nobr>",
+        "width": 150
+    },
+    {
+        "title": "City",
+        "field": "city",
+        "width": 70
     },
     {
         "title": "Department",
         "field": "department",
-        "width": 150
+        "width": 70
     },
     {
-        "title": "Location",
-        "field": "location",
-        "width": 150
-    },
-    {
-        "title": "Email",
-        "field": "email",
-        "width": 150
-    },
-    {
-        "title": "Domain",
-        "field": "domain",
-        "width": 150
-    },
-    {
-        "title": "Domain Controller",
-        "field": "domainController",
-        "width": 150
-    },
-    {
-        "title": "State",
-        "template": "<dmp-progress-bar data='#: JSON.stringify(data) #' controller-name='EntityProgressBarController' />",
-        "width": "200px"
-    },
-    {
-        "title": "Details",
-        "field": "lastResultDescription"
+        "title": "Job Title",
+        "field": "jobTitle",
+        "width": 70
     }
 ],
     

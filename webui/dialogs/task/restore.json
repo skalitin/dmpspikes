@@ -1,0 +1,79 @@
+{
+    "defaults": {
+        "name": "Restore objects",
+        "runTask": "now",
+        "status": "New",
+        "type": "Restore"
+    },
+    "title": "Restore Objects",
+    "width": "800px",
+    "wizard": {
+        "steps": [
+            {
+                "form":{
+                    "fields": [
+
+                        {
+                            "type": "checkbox",
+                            "title": "Select if objects should be restored from Recycle Bin",
+                            "field": "restoreAction"
+                        },
+
+                        {
+
+                            "type": "group",
+                            "title": "Credentials for restoring from Recycle Bin",
+                            "disabled": "restoreAction != true",
+
+                            "fields": [
+
+                            {
+                                "type": "text",
+                                "title": "User:",
+                                "field": "username"
+                            },
+                            {
+                                "type": "password",
+                                "title": "Password:",
+                                "field": "password"
+                            }]}
+                    ]
+                },
+                "title": "Restore"
+            },
+            {
+                "form": {
+                    "fields": [
+
+                        {
+                            "field": "attributes",
+                            "options": {
+                                "buttonLavel": "Browse",
+                                "columns": [
+                                    {
+                                        "field": "title",
+                                        "sortable": true,
+                                        "title": "Name"
+                                    }
+                                ],
+                                "dataSource": {
+                                    "serverSorting": true,
+                                    "sort": {
+                                        "dir": "asc",
+                                        "field": "title"
+                                    }
+                                },
+                                "dataTextField": "title",
+                                "dataValueField": "title",
+                                "url": "/api/ad_fields"
+                            },
+                            "title": "Attributes to restore",
+                            "type": "selectedobjects"
+                        }
+                    ]
+                },
+                "title": "Attributes"
+            }
+        ]
+    }
+}

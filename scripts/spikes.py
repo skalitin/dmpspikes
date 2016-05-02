@@ -14,28 +14,43 @@ project_data = {'name': 'New Project',
 project_id = 'new-project-1'
 r_new_proj1 = requests.post(api + "/projects/%s" % project_id, data=project_data)
 
+#delete all objects
+response = requests.get(api + "/objects")
+data = json.loads(response.text)
+for h in data['hits']['hits']:
+    id = h['_id']
+    requests.delete(api + "/objects/" + id)
+
 #Delete all collections
 response = requests.get(api + "/collections")
 data = json.loads(response.text)
 for h in data['hits']['hits']:
-    coll_id = h['_id']
-    requests.delete(api + "/collections/" + coll_id)
+    id = h['_id']
+    requests.delete(api + "/collections/" + id)
 
-#Sync backups
-#for i in range(1,3):
-i = 1
-data = dict(
-    title="New Backup %s" % i,
-    when=datetime.datetime.now().isoformat(),
-    users=42 + i,
-    projectId='new-project-1',
-    tenantId='tenant2',
-   # collections='["tenant2"]',
-    connectionId='AVRxAJKbplFxrm2a1RZO')
-res = requests.post(api + "/backups/backup%s" % i, data=data)
-print(res.text)
+#Sync backups to collection
+collection_id = 'tenant2'
+for i in range(1,3):
+    data = dict(
+        title="New backup %s" % i,
+        when=datetime.datetime.now().isoformat(),
+        users=5000 + i,
+        projectId='new-project-1',
+        tenantId='tenant2')
+    res = requests.post("%s/collections/%s/backups" % (api, collection_id), data=data)
+    print(res.text)
 
-res = requests.post(api + "/collections/tenant2/backups",data=data)
-print(res.text)
+#Create objects
+collection_id = 'tenant2'
+for i in range(0,3):
+    data = dict(
+        displayName="User %s" % i,
+        mail="mail %s" % i,
+        name="Name %s" % i,
+        location="location %s" % i,
+        projectId='new-project-1',
+        backupDate=datetime.datetime.now().isoformat(),
+        tenantId='tenant2')
+    res = requests.post("%s/collections/%s/objects" % (api, collection_id), data=data)
+    print(res.text)
 
-    #connectionId = 'AVRwti3HmB7CB6pk7BZW'
