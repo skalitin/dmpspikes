@@ -1,0 +1,3 @@
+- project type is always AD
+- manage tenants dialog
+- unpack backup - simplified view

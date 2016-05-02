@@ -31,7 +31,17 @@ var models = {
             },
             "users": {
                 "type": "long"
+            },
+            connectionId: {
+		 type: "string" 
+	    },
+            collections: {
+                type: "array",
+                element: {
+                    id: { type: "string", index: false }
+                }
             }
+
         }
     },
 

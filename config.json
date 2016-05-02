@@ -6,7 +6,7 @@
       "DMP-config",
       "webui"
     ],
-    "send_analytics": true
+    "send_analytics": false
   },
   "shared_components_service": {
     "port": 81
@@ -18,7 +18,8 @@
   },
   "rest_service": {
     "port": 8080,
-    "elasticsearch_port": 8090,
+    "elasticsearch_host": "localhost",
+    "elasticsearch_port": 9200,
     "elasticsearch_db": [
       "..",
       "DMP-config",

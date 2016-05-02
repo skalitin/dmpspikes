@@ -1,0 +1,13 @@
+[
+  {
+    "label": "Unpack backup",
+    "icon_class": "discover",
+    "type": "discover",
+    "enabled_state": "ConnectionsExist"
+  },
+  {
+    "label": "Browse objects to restore",
+    "icon_class": "check-action-icon",
+    "controller": "MigrateActionController"
+  }
+]

@@ -22,15 +22,18 @@ async def create_collection(request):
     response = await request.read()
     data = json.loads(response.decode())
 
-    if not data["data"].get("draft"):
+    connection_data = data["data"]
+    tenant_id = connection_data["tenantId"]
+
+    if not connection_data.get("draft"):
         collection = {
-            "name": data["data"]["name"],
+            "name": connection_data["name"],
             "connectionId": data["id"],
-            "projectId": data["data"]["projectId"]
+            "projectId": connection_data["projectId"]
         }
 
-        logging.info("Creating collection %s..." % collection["name"])
-        response = await aiohttp.post(api + "/collections", data=collection)
+        logging.info("Creating collection %s for tenant %s..." % (collection["name"], tenant_id))
+        response = await aiohttp.post("%s/collections/%s" % (api, tenant_id), data=collection)
         logging.info(response)
 
     return web.Response(body=b"{}")

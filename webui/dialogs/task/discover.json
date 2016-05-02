@@ -25,14 +25,23 @@
 
 		    "columns": [
 			{
+			    "title": "Backup",
+			    "field": "title"
+			},
+			{
 			    "title": "Created",
 			    "field": "when",
                             "template": "<nobr>#: Sprint.humanize(when + 'Z', 'CalendarDate') #</nobr>",
                             "sortable": true
 			},
 			{
-			    "title": "Users",
+			    "title": "Objects",
 			    "field": "users"
+			},
+                        {
+			    "title": "Tenant Id",
+			    "field": "tenantId",
+			    "sortable": true
 			}
 		    ]
 		}

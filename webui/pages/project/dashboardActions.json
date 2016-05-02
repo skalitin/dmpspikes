@@ -13,7 +13,6 @@
   {
     "label": "Browse objects to restore",
     "icon_class": "check-action-icon",
-    "controller": "MigrateActionController",
-    "enabled_state": "ObjectsExist"
+    "controller": "MigrateActionController"
   }
 ]
