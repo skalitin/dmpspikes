@@ -68,13 +68,32 @@ async def test_connection(request):
     return web.Response(body=b"{}")
 
 
+async def restore_objects(request):
+    response = await request.read()
+    data = json.loads(response.decode())
+    logging.info("Restore callback: %s" % data)
+
+    return web.Response(body=b"{}")
+
+
 def register_callbacks():
+    logging.info("Register callbacks...")
+
     data = {"pattern": "/api/connections/:id/verify", "method": "POST", "url": "http://localhost:5000/verify"}
-    requests.post(api + "/callbacks/verify-connection", data=data)
+    response = requests.post(api + "/callbacks/verify-connection", data=data)
+    print(response.text)
 
     data = {"pattern": "/api/connections", "method": "POST", "url": "http://localhost:5000/connections"}
-    requests.post(api + "/callbacks/new-connection", data=data)
+    response = requests.post(api + "/callbacks/new-connection", data=data)
+    print(response.text)
 
+    data = {"pattern": "/api/tasks/:id",
+            "where": {"type": "Restore"},
+            "on": {"action": "Start"},
+            "method": "PATCH",
+            "url": "http://localhost:5000/restore"}
+    response = requests.post(api + "/callbacks/restore-objects", json=data)
+    print(response.text)
 
 if __name__ == "__main__":
 
@@ -83,11 +102,13 @@ if __name__ == "__main__":
     app = web.Application()
     app.router.add_route("POST", "/verify", test_connection)
     app.router.add_route("POST", "/connections", create_collection)
+    app.router.add_route("POST", "/restore", restore_objects)
 
     loop = asyncio.get_event_loop()
     handler = app.make_handler()
 
     f = loop.create_server(handler, '0.0.0.0', 5000)
+
     logging.info("Listening...")
     loop.run_until_complete(f)
 
