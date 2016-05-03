@@ -1,0 +1,18 @@
+Strengths:
+- Acceptance tests
+- PowerShell API for core functionality
+- The most complicated code (jet db access) is stable and do not change often
+
+Weaknesses:
+- Console - mixed logic/UI code
+- Dependency on obsolete .Net Framework 3.5
+- Lack of unit tests
+- A lof UI implemented as MFC wizards - hard to extend and maintain
+
+Opportunities:
+- PowerShell API for RMADFE, ADVL
+- 	
+
+Threats:
+- Serious changes in next Windows Server versions
+- 
